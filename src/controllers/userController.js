@@ -87,5 +87,39 @@ const verifyToken = async (req, res) => {
   }
 };
 
-module.exports = { register, login, verifyToken };
+//método updateUser
+const updateUser = async (req, res) => {
+  try {
+    const userId = req.user.id; // viene del token
+    const { username, email, password } = req.body;
+
+    const updateData = {};
+
+    if (username) updateData.username = username;
+    if (email) updateData.email = email;
+
+    if (password) {
+      const salt = await bcrypt.genSalt(10);
+      updateData.password = await bcrypt.hash(password, salt);
+    }
+
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      updateData,
+      { new: true, runValidators: true }
+    ).select("-password");
+
+    return res.json({
+      message: "Usuario actualizado",
+      user: updatedUser
+    });
+  } catch (error) {
+    return res.status(500).json({ message: "Error en update", error: error.message });
+  }
+};
+
+
+module.exports = { register, login, verifyToken, updateUser };
+
+
 
