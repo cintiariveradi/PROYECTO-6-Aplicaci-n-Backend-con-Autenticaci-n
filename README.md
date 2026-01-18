@@ -55,28 +55,29 @@ src/
 ## ⚙️ Instalación
 
 ### 1️⃣ Clonar repositorio
-
-```bash
 git clone <URL_DEL_REPOSITORIO>
 cd proyecto6mongo
-2️⃣ Instalar dependencias
+### 2️⃣ Instalar dependencias
 npm install
-3️⃣ Crear archivo .env
+### 3️⃣ Crear archivo .env
 PORT=3000
 MONGO_URI=mongodb://127.0.0.1:27017/proyecto6mongo
 JWT_SECRET=tu_secreto_super_seguro
 JWT_EXPIRES_IN=60d
-4️⃣ Ejecutar proyecto
+### 4️⃣ Ejecutar proyecto
 npm run dev
-🔐 Autenticación
+---
+## 🔐 Autenticación
 Las rutas protegidas requieren el siguiente header:
 Authorization: Bearer <token>
-👤 Endpoints de Usuario
+---
+## 👤 Endpoints de Usuario
 Método	Endpoint	Descripción
 POST	/api/user/register	Registrar usuario
 POST	/api/user/login	Login y obtención de token
 GET	/api/user/verifytoken	Verificar token
 PUT	/api/user/update	Actualizar usuario
+---
 📝 Endpoints de Tareas (Productos)
 Método	Endpoint	Descripción
 POST	/api/product/create	Crear tarea
@@ -84,15 +85,18 @@ GET	/api/product/readall	Listar tareas
 GET	/api/product/readone/:id	Obtener tarea
 PUT	/api/product/update/:id	Actualizar tarea
 DELETE	/api/product/delete/:id	Eliminar tarea
-🔒 Seguridad implementada
+---
+## 🔒 Seguridad implementada
 Contraseñas encriptadas con bcrypt
 Tokens JWT con expiración
 Middleware de autenticación
 Variables sensibles protegidas con .env
 .env excluido mediante .gitignore
-📦 Scripts disponibles
+---
+## 📦 Scripts disponibles
 npm run dev     # Ejecuta en modo desarrollo
 npm start       # Ejecuta en modo producción
-👩‍💻 Autora
+---
+## 👩‍💻 Autora
 Cintia Rivera
 Bootcamp DWFS – 2026
