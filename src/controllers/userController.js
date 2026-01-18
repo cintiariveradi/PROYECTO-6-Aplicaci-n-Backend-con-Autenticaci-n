@@ -1,6 +1,8 @@
 const bcrypt = require("bcryptjs");
 const User = require("../models/userModel");
+const jwt = require("jsonwebtoken");
 
+//método register
 const register = async (req, res) => {
   try {
     const { username, email, password } = req.body;
@@ -36,4 +38,54 @@ const register = async (req, res) => {
   }
 };
 
-module.exports = { register };
+//método login
+
+
+const login = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+      return res.status(400).json({ message: "Email y password son obligatorios" });
+    }
+
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(401).json({ message: "Credenciales inválidas" });
+    }
+
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return res.status(401).json({ message: "Credenciales inválidas" });
+    }
+
+    const token = jwt.sign(
+      { user: { id: user._id } },
+      process.env.JWT_SECRET,
+      { expiresIn: process.env.JWT_EXPIRES_IN }
+    );
+
+    return res.json({
+      message: "Login exitoso",
+      token
+    });
+
+  } catch (error) {
+    return res.status(500).json({ message: "Error en login", error: error.message });
+  }
+};
+
+//método verifyToken
+const verifyToken = async (req, res) => {
+  try {
+    return res.json({
+      ok: true,
+      user: req.user // { id: ... }
+    });
+  } catch (error) {
+    return res.status(500).json({ message: "Error en verifytoken", error: error.message });
+  }
+};
+
+module.exports = { register, login, verifyToken };
+
