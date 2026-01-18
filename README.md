@@ -32,23 +32,7 @@ Este proyecto forma parte del **Bootcamp de Desarrollo Web Full Stack (DWFS)**.
 
 ---
 
-## 🗂 Estructura del proyecto
 
-src/
-├── config/
-│ └── db.js
-├── controllers/
-│ ├── userController.js
-│ └── taskController.js
-├── middlewares/
-│ └── authMiddleware.js
-├── models/
-│ ├── userModel.js
-│ └── taskModel.js
-├── routes/
-│ ├── userRoutes.js
-│ └── productRoutes.js
-└── server.js
 
 ---
 
@@ -70,14 +54,14 @@ npm run dev
 ## 🔐 Autenticación
 Las rutas protegidas requieren el siguiente header:
 Authorization: Bearer <token>
----
+
 ## 👤 Endpoints de Usuario
 Método	Endpoint	Descripción
 POST	/api/user/register	Registrar usuario
 POST	/api/user/login	Login y obtención de token
 GET	/api/user/verifytoken	Verificar token
 PUT	/api/user/update	Actualizar usuario
----
+
 📝 Endpoints de Tareas (Productos)
 Método	Endpoint	Descripción
 POST	/api/product/create	Crear tarea
@@ -85,18 +69,18 @@ GET	/api/product/readall	Listar tareas
 GET	/api/product/readone/:id	Obtener tarea
 PUT	/api/product/update/:id	Actualizar tarea
 DELETE	/api/product/delete/:id	Eliminar tarea
----
+
 ## 🔒 Seguridad implementada
 Contraseñas encriptadas con bcrypt
 Tokens JWT con expiración
 Middleware de autenticación
 Variables sensibles protegidas con .env
 .env excluido mediante .gitignore
----
+
 ## 📦 Scripts disponibles
 npm run dev     # Ejecuta en modo desarrollo
 npm start       # Ejecuta en modo producción
----
+
 ## 👩‍💻 Autora
 Cintia Rivera
 Bootcamp DWFS – 2026

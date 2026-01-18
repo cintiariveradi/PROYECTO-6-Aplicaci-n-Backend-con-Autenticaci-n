@@ -96,7 +96,15 @@ const updateUser = async (req, res) => {
     const updateData = {};
 
     if (username) updateData.username = username;
-    if (email) updateData.email = email;
+
+    if (email) {
+      // Evita duplicados (otro usuario con el mismo email)
+      const exists = await User.findOne({ email, _id: { $ne: userId } });
+      if (exists) {
+        return res.status(409).json({ message: "Ya existe un usuario con ese email" });
+      }
+      updateData.email = email;
+    }
 
     if (password) {
       const salt = await bcrypt.genSalt(10);
@@ -114,10 +122,14 @@ const updateUser = async (req, res) => {
       user: updatedUser
     });
   } catch (error) {
+    // Manejo de error de índice unique (E11000)
+    if (error?.code === 11000) {
+      return res.status(409).json({ message: "Email ya registrado" });
+    }
+
     return res.status(500).json({ message: "Error en update", error: error.message });
   }
 };
-
 
 module.exports = { register, login, verifyToken, updateUser };
 

@@ -73,9 +73,18 @@ const updateTask = async (req, res) => {
   try {
     const { id } = req.params;
 
+    const allowedFields = ["title", "description", "status", "priority", "dueDate"];
+    const updateData = {};
+
+    for (const field of allowedFields) {
+      if (req.body[field] !== undefined) {
+        updateData[field] = req.body[field];
+      }
+    }
+
     const updatedTask = await Task.findOneAndUpdate(
-      { _id: id, owner: req.user.id }, // asegura que solo el owner actualiza
-      req.body,
+      { _id: id, owner: req.user.id },
+      updateData,
       { new: true, runValidators: true }
     );
 
@@ -91,6 +100,7 @@ const updateTask = async (req, res) => {
     return res.status(500).json({ message: "Error al actualizar tarea", error: error.message });
   }
 };
+
 
 // eliminar una tarea por id
 const deleteTask = async (req, res) => {
