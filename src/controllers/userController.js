@@ -34,7 +34,7 @@ const register = async (req, res) => {
       }
     });
   } catch (error) {
-    return res.status(500).json({ message: "Error en register", error: error.message });
+    return res.status(500).json({ message: "Error en el registro", error: error.message });
   }
 };
 
